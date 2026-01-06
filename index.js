@@ -15,8 +15,8 @@ setTaskDescription('Посмотрет курс на Ютубе');
 console.log(task);
 
 
-const completeTask = task => {
-    if (!task) {
+const completeTask = (someTask) => {
+    if (!someTask) {
         console.log('Задача отсутствует');
     } else {
         task = '';
@@ -25,14 +25,15 @@ const completeTask = task => {
     }
 }
 completeTask(task);
+console.log(task);
 
 
-const deleteTask = task => {
+const deleteTask = () => {
     if (!task) {
         console.log('Задача отсутствует');
     } else {
-        return task = '';
+        task = '';
     }
 }
-task = deleteTask(task);
+deleteTask();
 console.log(task);
