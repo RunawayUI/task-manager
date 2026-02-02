@@ -34,17 +34,6 @@ function showTasks() {
 }
 showTasks();
 
-// const setTaskDescription = taskDescription => {
-//     if (task) {
-//         console.log('Не могу добавить задачу, завершите или удалите предыдущую');
-//     } else {
-//         return task = taskDescription;
-//     }
-// }
-// setTaskDescription('Посмотрет курс на Ютубе');
-// console.log(task);
-
-
 const completeTask = (index) => {
     if (!tasks[index]) {
         console.log('Задача отсутствует');
