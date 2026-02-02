@@ -1,37 +1,67 @@
-let task = '';
+const tasks = [
+    {
+        title: "Сделать практику",
+        description: "контекст this",
+        isCompleted: false,
+        createdDate: new Date(),
+        completedDate: null
+    }
+];
+const task = {
+    title: "Купить продукты",
+    description: "Молоко, хлеб, яйца",
+    isCompleted: false,
+    createdDate: new Date(),
+    completedDate: null
+};
 let completedTaskCount = 0;
 
-const showTask = task => task ? console.log(task) : console.log('Задача отсутствует');
-showTask(task);
-
-const setTaskDescription = taskDescription => {
-    if (task) {
-        console.log('Не могу добавить задачу, завершите или удалите предыдущую');
-    } else {
-        return task = taskDescription;
-    }
+const setTask = task => {
+    return tasks.push(task);
 }
-setTaskDescription('Посмотрет курс на Ютубе');
-console.log(task);
+setTask(task);
+
+function showTasks() {
+    tasks.forEach(task => {
+        console.log(
+            `Задача: ${task.title}, 
+            Описание: ${task.description}, 
+            Статус: ${task.isCompleted}, 
+            Создано: ${task.createdDate}
+            ${task.completedDate ? 'Выполнено: ' + task.completedDate : ''}
+            \n`)
+    });
+}
+showTasks();
+
+// const setTaskDescription = taskDescription => {
+//     if (task) {
+//         console.log('Не могу добавить задачу, завершите или удалите предыдущую');
+//     } else {
+//         return task = taskDescription;
+//     }
+// }
+// setTaskDescription('Посмотрет курс на Ютубе');
+// console.log(task);
 
 
-const completeTask = (someTask) => {
-    if (!someTask) {
+const completeTask = (index) => {
+    if (!tasks[index]) {
         console.log('Задача отсутствует');
     } else {
-        task = '';
+        tasks[index].isCompleted = true;
+        tasks[index].completedDate = new Date();
         completedTaskCount += 1;
-        console.log(task, completedTaskCount);
     }
 }
-completeTask(task);
-console.log(task);
+completeTask(1);
+showTasks();
 
 
-const deleteTask = () => {
-    if (!task) {
+const deleteTask = (index) => {
+    if (!tasks[index]) {
         console.log('Задача отсутствует');
-    } else {
+    } else if(tasks[index].isCompleted === false){
         task = '';
     }
 }
