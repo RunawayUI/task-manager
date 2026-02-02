@@ -61,9 +61,23 @@ showTasks();
 const deleteTask = (index) => {
     if (!tasks[index]) {
         console.log('Задача отсутствует');
-    } else if(tasks[index].isCompleted === false){
-        task = '';
+    } else if (tasks[index].isCompleted === false) {
+        const areYouSure = prompt('Еще не выполнено, удалить? (да/нет)').toLowerCase();
+        if (areYouSure === 'да') {
+            tasks.splice(index, 1);
+            return tasks;
+        } else {
+            return tasks;
+        }
+    } else {
+        tasks.splice(index, 1);
+        return tasks;
     }
 }
-deleteTask();
-console.log(task);
+deleteTask(0);
+
+const clearTasks = () => {
+    tasks.length = 0;
+}
+clearTasks();
+console.log(tasks);
