@@ -1,9 +1,19 @@
+function convertDate(date) {
+    return date.toLocaleString('ru-RU', {
+        day: '2-digit',
+        month: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    }).replace(',', '')
+}
+
 const tasks = [
     {
         title: "Сделать практику",
         description: "контекст this",
         isCompleted: false,
-        createdDate: new Date(),
+        createdDate: convertDate(new Date()),
         completedDate: null
     }
 ];
@@ -11,24 +21,34 @@ const task = {
     title: "Купить продукты",
     description: "Молоко, хлеб, яйца",
     isCompleted: false,
-    createdDate: new Date(),
+    createdDate: convertDate(new Date()),
     completedDate: null
 };
 let completedTaskCount = 0;
 
-const setTask = task => {
+const setTask = () => {
+    const taskTitle = prompt('Название задачи?');
+    const taskDescription = prompt('Описание задачи?');
+    const task = {
+        title: taskTitle,
+        description: taskDescription,
+        isCompleted: false,
+        createdDate: convertDate(new Date()),
+        completedDate: null
+    }
     return tasks.push(task);
 }
 setTask(task);
 
 function showTasks() {
     tasks.forEach(task => {
+        const { title, description, isCompleted, createdDate, completedDate } = task;
         console.log(
-            `Задача: ${task.title}, 
-            Описание: ${task.description}, 
-            Статус: ${task.isCompleted}, 
-            Создано: ${task.createdDate}
-            ${task.completedDate ? 'Выполнено: ' + task.completedDate : ''}
+            `Задача: ${title},
+            Описание: ${description},
+            Статус: ${isCompleted},
+            Создано: ${createdDate}
+            ${completedDate ? `Выполнено: ${completedDate}` : ''}
             \n`)
     });
 }
@@ -36,30 +56,35 @@ showTasks();
 
 const completeTask = (index) => {
     if (!tasks[index]) {
-        console.log('Задача отсутствует');
-    } else {
-        tasks[index].isCompleted = true;
-        tasks[index].completedDate = new Date();
-        completedTaskCount += 1;
+        return console.log('Задача отсутствует');
     }
+    const task = tasks[index];
+
+    task.isCompleted = true;
+    task.completedDate = convertDate(new Date());
+    completedTaskCount += 1;
+
+    console.log(`Задача ${task.title} успешно завершена`);
+
 }
 completeTask(1);
 showTasks();
 
 
 const deleteTask = (index) => {
-    if (!tasks[index]) {
-        console.log('Задача отсутствует');
-    } else if (tasks[index].isCompleted === false) {
-        const areYouSure = prompt('Еще не выполнено, удалить? (да/нет)').toLowerCase();
-        if (areYouSure === 'да') {
-            tasks.splice(index, 1);
-            return tasks;
-        } else {
-            return tasks;
-        }
-    } else {
+    const task = tasks[index];
+
+    if (!task) {
+        return console.log('Задача отсутствует');
+    }
+
+    if (!task.isCompleted) {
+        const areYouSure = prompt('Еще не выполнено, удалить? (да/нет)');
+
+        if (areYouSure?.toLowerCase() !== 'да') return console.log('удаление отменено');
+
         tasks.splice(index, 1);
+        console.log('удалено успешно');
         return tasks;
     }
 }
